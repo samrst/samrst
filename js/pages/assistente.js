@@ -3,6 +3,12 @@
    Chat simulado com respostas mockadas
    ================================================================ */
 
+/** Escapa caracteres HTML para prevenir XSS */
+function escapeHtml(text) {
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  return text.replace(/[&<>"']/g, (ch) => map[ch]);
+}
+
 const AssistentePage = {
   /** Mensagens do chat */
   messages: [
@@ -79,7 +85,7 @@ const AssistentePage = {
             ${msg.type === 'bot' ? 'smart_toy' : 'person'}
           </span>
         </div>
-        <div class="chat-msg__bubble">${msg.text}</div>
+        <div class="chat-msg__bubble">${escapeHtml(msg.text)}</div>
       </div>
     `).join('');
   },
