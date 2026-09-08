@@ -168,14 +168,18 @@ const MapaPage = {
       });
     });
 
-    // Click nos pins
-    document.querySelectorAll('.map-pin').forEach(pin => {
-      pin.addEventListener('click', () => {
-        const pinData = this.pins.find(p => p.id === parseInt(pin.dataset.pinId));
-        if (pinData) {
-          App.showToast(`${pinData.label} — Status: ${pinData.status}`);
+    // Click nos pins (event delegation para sobreviver a re-renders)
+    const mapGrid = document.getElementById('mapGrid');
+    if (mapGrid) {
+      mapGrid.addEventListener('click', (e) => {
+        const pinEl = e.target.closest('.map-pin');
+        if (pinEl) {
+          const pinData = this.pins.find(p => p.id === parseInt(pinEl.dataset.pinId));
+          if (pinData) {
+            App.showToast(`${pinData.label} — Status: ${pinData.status}`);
+          }
         }
       });
-    });
+    }
   }
 };

@@ -386,6 +386,8 @@ const App = {
   },
 
   /* ---- Toast / Notificação ---- */
+  _toastTimer: null,
+
   showToast(message) {
     const toast = document.getElementById('toast');
     if (!toast) return;
@@ -394,7 +396,8 @@ const App = {
       ${message}
     `;
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
   }
 };
 
